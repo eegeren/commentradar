@@ -79,9 +79,6 @@ export async function scrapeProduct(url: string): Promise<ScrapedProduct> {
     rainforestGet<{ product: RainforestProduct }>({ type: 'product', asin }),
   ])
 
-  console.log('Rainforest reviews response:', JSON.stringify(reviewsData, null, 2))
-  console.log('Rainforest product response:', JSON.stringify(productData, null, 2))
-
   const product = productData?.product
   if (!product) {
     throw new Error('Could not fetch product data. Please check the URL and try again.')

@@ -1,8 +1,8 @@
-import OpenAI from 'openai'
+import Anthropic from '@anthropic-ai/sdk'
 import { ClaudeAnalysis, RatingBreakdown } from './types'
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const client = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
 })
 
 interface AnalyzeInput {
@@ -28,14 +28,12 @@ export async function analyzeReviews({
   featureBullets,
   description,
 }: AnalyzeInput): Promise<ClaudeAnalysis> {
-  const response = await client.chat.completions.create({
-    model: 'gpt-4o-mini',
+  const response = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 2048,
+    system:
+      'You are a product improvement analyst. Your job is to identify gaps between what a product promises and what customers actually experience. Return structured JSON only — no markdown, no explanation.',
     messages: [
-      {
-        role: 'system',
-        content:
-          'You are a product improvement analyst. Your job is to identify gaps between what a product promises and what customers actually experience. Return structured JSON only — no markdown, no explanation.',
-      },
       {
         role: 'user',
         content: `Analyze these ${reviews.length} Amazon product reviews and identify the most important gaps between promise and reality.
@@ -79,10 +77,9 @@ REVIEWS:
 ${reviews.join('\n---\n')}`,
       },
     ],
-    response_format: { type: 'json_object' },
   })
 
-  const content = response.choices[0].message.content
-  if (!content) throw new Error('No response from OpenAI')
-  return JSON.parse(content) as ClaudeAnalysis
+  const block = response.content[0]
+  if (block.type !== 'text') throw new Error('No response from Claude')
+  return JSON.parse(block.text) as ClaudeAnalysis
 }

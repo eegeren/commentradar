@@ -1,52 +1,114 @@
 import { Report } from './types'
 
-export function generatePdfContent(report: Report): string {
-  // TODO: Implement with a PDF library like @react-pdf/renderer or puppeteer
-  // For MVP, we return a formatted text representation
-  const lines = [
-    `ReviewRadar Report`,
-    `==================`,
-    ``,
-    `Product: ${report.product_name}`,
-    `ASIN: ${report.asin}`,
-    `Generated: ${new Date(report.created_at).toLocaleDateString()}`,
-    `Total Reviews Analyzed: ${report.total_reviews}`,
-    ``,
-    `SENTIMENT ANALYSIS`,
-    `------------------`,
-    `Overall Score: ${report.sentiment_score}/100`,
-    `Positive: ${report.positive_percentage}%`,
-    `Negative: ${report.negative_percentage}%`,
-    ``,
-    `TOP COMPLAINTS`,
-    `--------------`,
-    ...report.top_complaints.flatMap((c, i) => [
-      `${i + 1}. ${c.title} (${c.frequency} mentions)`,
-      `   ${c.description}`,
-      `   Quote: "${c.example_quote}"`,
-      ``
-    ]),
-    `ACTION ITEMS`,
-    `------------`,
-    ...report.action_items.flatMap((a, i) => [
-      `${i + 1}. [${a.priority.toUpperCase()}] ${a.title}`,
-      `   ${a.description}`,
-      ``
-    ])
-  ]
+function getPriorityColor(priority: string): string {
+  if (priority === 'high') return '#ef4444'
+  if (priority === 'medium') return '#f59e0b'
+  return '#6366f1'
+}
 
-  return lines.join('\n')
+function buildPrintHtml(report: Report): string {
+  const date = new Date(report.created_at).toLocaleDateString('en-US', {
+    year: 'numeric', month: 'long', day: 'numeric',
+  })
+
+  const complaintsHtml = report.top_complaints.map((c, i) => `
+    <div class="complaint">
+      <div class="complaint-header">
+        <span class="rank">${i + 1}</span>
+        <strong>${c.title}</strong>
+        <span class="freq">${c.frequency} mentions</span>
+      </div>
+      <p class="desc">${c.description}</p>
+      <blockquote>"${c.example_quote}"</blockquote>
+    </div>
+  `).join('')
+
+  const actionsHtml = report.action_items.map((a, i) => `
+    <div class="action">
+      <div class="action-header">
+        <span class="rank">${i + 1}</span>
+        <strong>${a.title}</strong>
+        <span class="priority" style="color:${getPriorityColor(a.priority)}">${a.priority.toUpperCase()}</span>
+      </div>
+      <p class="desc">${a.description}</p>
+    </div>
+  `).join('')
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ReviewRadar — ${report.product_name}</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #111; background: #fff; padding: 40px; font-size: 13px; line-height: 1.6; }
+    h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .meta { color: #666; font-size: 12px; margin-bottom: 24px; }
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+    .metric { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; }
+    .metric-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #9ca3af; margin-bottom: 4px; }
+    .metric-value { font-size: 24px; font-weight: 700; color: #111; }
+    .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6366f1; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; margin: 20px 0 12px; }
+    .complaint, .action { border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px; margin-bottom: 10px; page-break-inside: avoid; }
+    .complaint-header, .action-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .rank { width: 22px; height: 22px; border-radius: 6px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #6b7280; flex-shrink: 0; }
+    .freq { margin-left: auto; font-size: 11px; font-weight: 600; color: #6366f1; background: rgba(99,102,241,0.08); padding: 2px 8px; border-radius: 4px; }
+    .priority { margin-left: auto; font-size: 10px; font-weight: 700; }
+    .desc { color: #4b5563; margin: 6px 0; font-size: 12px; }
+    blockquote { margin-top: 8px; padding-left: 10px; border-left: 2px solid #6366f1; color: #6b7280; font-style: italic; font-size: 12px; }
+    .sentiment-bar { height: 8px; border-radius: 4px; background: #f3f4f6; overflow: hidden; margin: 12px 0; }
+    .sentiment-fill { height: 100%; background: linear-gradient(90deg, #6366f1, #818cf8); border-radius: 4px; }
+    .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #e5e7eb; color: #9ca3af; font-size: 11px; }
+    @media print { body { padding: 20px; } }
+  </style>
+</head>
+<body>
+  <h1>${report.product_name}</h1>
+  <p class="meta">ASIN: ${report.asin} &nbsp;·&nbsp; Generated: ${date} &nbsp;·&nbsp; ${report.total_reviews} reviews analyzed</p>
+
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-label">Satisfaction Score</div>
+      <div class="metric-value">${report.sentiment_score}<span style="font-size:14px;font-weight:400;color:#9ca3af">/100</span></div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Positive Reviews</div>
+      <div class="metric-value">${report.positive_percentage}<span style="font-size:14px;font-weight:400;color:#9ca3af">%</span></div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Negative Reviews</div>
+      <div class="metric-value">${report.negative_percentage}<span style="font-size:14px;font-weight:400;color:#9ca3af">%</span></div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Complaints Found</div>
+      <div class="metric-value">${report.top_complaints.length}</div>
+    </div>
+  </div>
+
+  <div class="sentiment-bar">
+    <div class="sentiment-fill" style="width:${report.positive_percentage}%"></div>
+  </div>
+
+  <div class="section-title">Top Complaints</div>
+  ${complaintsHtml}
+
+  <div class="section-title">Action Items</div>
+  ${actionsHtml}
+
+  <div class="footer">Generated by ReviewRadar &nbsp;·&nbsp; reviewradar.app</div>
+</body>
+</html>`
 }
 
 export function downloadReport(report: Report): void {
-  const content = generatePdfContent(report)
-  const blob = new Blob([content], { type: 'text/plain' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = `reviewradar-${report.asin}-${Date.now()}.txt`
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  URL.revokeObjectURL(url)
+  const html = buildPrintHtml(report)
+  const win = window.open('', '_blank', 'width=800,height=900')
+  if (!win) return
+  win.document.write(html)
+  win.document.close()
+  win.focus()
+  // Small delay to ensure styles are applied before print dialog opens
+  setTimeout(() => {
+    win.print()
+  }, 400)
 }

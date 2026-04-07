@@ -1,16 +1,20 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import Link from 'next/link'
-import { Radar, Plus } from 'lucide-react'
+import { Radar, Plus, Search, SlidersHorizontal } from 'lucide-react'
 import ReportCard from '@/components/dashboard/ReportCard'
 import EmptyState from '@/components/dashboard/EmptyState'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Report } from '@/lib/types'
 
+type SortOption = 'newest' | 'oldest' | 'score_high' | 'score_low'
+
 export default function DashboardPage() {
   const [reports, setReports] = useState<Report[]>([])
   const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
+  const [sort, setSort] = useState<SortOption>('newest')
 
   useEffect(() => {
     async function fetchReports() {
@@ -26,6 +30,23 @@ export default function DashboardPage() {
     }
     fetchReports()
   }, [])
+
+  const filtered = useMemo(() => {
+    let result = reports
+    if (search.trim()) {
+      const q = search.toLowerCase()
+      result = result.filter(r =>
+        r.product_name.toLowerCase().includes(q) || r.asin.toLowerCase().includes(q)
+      )
+    }
+    return [...result].sort((a, b) => {
+      if (sort === 'newest') return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      if (sort === 'oldest') return new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+      if (sort === 'score_high') return b.sentiment_score - a.sentiment_score
+      if (sort === 'score_low') return a.sentiment_score - b.sentiment_score
+      return 0
+    })
+  }, [reports, search, sort])
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
@@ -55,6 +76,34 @@ export default function DashboardPage() {
           )}
         </div>
 
+        {!loading && reports.length > 1 && (
+          <div className="flex items-center gap-3 mb-6">
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/30 pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search by product name or ASIN…"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                className="w-full h-9 bg-white/[0.04] border border-white/[0.08] rounded-lg pl-9 pr-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-indigo-500/50 focus:bg-white/[0.06] transition-all"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-white/30" />
+              <select
+                value={sort}
+                onChange={e => setSort(e.target.value as SortOption)}
+                className="h-9 bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 text-sm text-white/70 focus:outline-none focus:border-indigo-500/50 transition-all appearance-none cursor-pointer"
+              >
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="score_high">Score: high → low</option>
+                <option value="score_low">Score: low → high</option>
+              </select>
+            </div>
+          </div>
+        )}
+
         {loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[0, 1, 2].map(i => (
@@ -65,9 +114,15 @@ export default function DashboardPage() {
 
         {!loading && reports.length === 0 && <EmptyState />}
 
-        {!loading && reports.length > 0 && (
+        {!loading && reports.length > 0 && filtered.length === 0 && (
+          <div className="text-center py-16 text-white/30 text-sm">
+            No reports match &ldquo;{search}&rdquo;
+          </div>
+        )}
+
+        {!loading && filtered.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {reports.map(report => (
+            {filtered.map(report => (
               <ReportCard key={report.id} report={report} />
             ))}
           </div>
