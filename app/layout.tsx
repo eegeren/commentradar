@@ -1,26 +1,26 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
+import './globals.css'
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
+})
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
-  title: "ReviewRadar — AI-powered Amazon review analysis",
-  description: "Turn 1-star reviews into your product roadmap. Paste any Amazon product URL and get an AI-powered analysis report in 60 seconds.",
-};
+  title: 'ReviewRadar - Amazon review analysis',
+  description: 'Paste an Amazon product URL and get a concrete report with complaint clusters, evidence, sentiment shifts, and next fixes.',
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html
@@ -29,5 +29,5 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[#0a0a0a]">{children}</body>
     </html>
-  );
+  )
 }

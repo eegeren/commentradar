@@ -10,12 +10,16 @@ const links = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] py-10 px-6">
-      <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+    <footer className="border-t border-white/8 px-6 py-10">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 sm:flex-row">
         <div className="flex items-center gap-2">
-          <Radar className="w-4 h-4 text-indigo-400" />
-          <span className="text-white font-semibold text-sm">ReviewRadar</span>
-          <span className="text-[#3f3f46] text-sm ml-1">— AI review analysis for Amazon sellers</span>
+          <div className="flex h-8 w-8 items-center justify-center rounded-md border border-[#9ff5d1]/25 bg-[#9ff5d1]/10">
+            <Radar className="h-4 w-4 text-[#9ff5d1]" />
+          </div>
+          <div>
+            <div className="text-sm font-semibold text-white">ReviewRadar</div>
+            <div className="text-sm text-[#6f859b]">Review analysis for Amazon sellers</div>
+          </div>
         </div>
 
         <div className="flex items-center gap-6">
@@ -23,16 +27,14 @@ export default function Footer() {
             <Link
               key={link.label}
               href={link.href}
-              className="text-[#52525b] hover:text-[#a1a1aa] text-sm transition-colors duration-200"
+              className="text-sm text-[#6f859b] transition-colors duration-200 hover:text-[#cdd9e5]"
             >
               {link.label}
             </Link>
           ))}
         </div>
 
-        <p className="text-[#3f3f46] text-xs">
-          © {new Date().getFullYear()} ReviewRadar
-        </p>
+        <p className="text-xs text-[#56687b]">© {new Date().getFullYear()} ReviewRadar</p>
       </div>
     </footer>
   )
