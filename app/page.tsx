@@ -60,8 +60,8 @@ const dashboardReports = [
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8fc2b6]">
-      <span className="h-1.5 w-1.5 rounded-full bg-[#9ff5d1]" />
+    <div className="inline-flex items-center gap-2 rounded-md border border-indigo-500/20 bg-indigo-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-indigo-300">
+      <span className="h-1.5 w-1.5 rounded-full bg-indigo-400" />
       {children}
     </div>
   )
@@ -77,26 +77,26 @@ function Bar({ value, color }: { value: number; color: string }) {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#07111a] text-white">
-      <nav className="sticky top-0 z-50 border-b border-white/8 bg-[#07111a]/88 backdrop-blur-xl">
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
+      <nav className="sticky top-0 z-50 border-b border-white/8 bg-[#0a0a0a]/88 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-6">
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md border border-[#9ff5d1]/25 bg-[#9ff5d1]/10">
-              <Radar className="h-4 w-4 text-[#9ff5d1]" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-md border border-indigo-500/25 bg-indigo-500/10">
+              <Radar className="h-4 w-4 text-indigo-400" />
             </div>
             <div>
               <div className="text-sm font-semibold tracking-tight">ReviewRadar</div>
-              <div className="text-[11px] text-[#7e92a8]">Amazon review intelligence</div>
+              <div className="text-[11px] text-[#71717a]">Amazon review intelligence</div>
             </div>
           </Link>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <Link href="/dashboard" className="hidden text-sm text-[#92a5ba] transition-colors hover:text-white sm:inline-flex">
+            <Link href="/dashboard" className="hidden text-sm text-[#71717a] transition-colors hover:text-white sm:inline-flex">
               Dashboard
             </Link>
             <Link
               href="/analyze"
-              className="inline-flex h-10 items-center rounded-md border border-[#9ff5d1]/35 bg-[#9ff5d1] px-4 text-sm font-semibold text-[#07111a] transition-transform hover:-translate-y-px"
+              className="inline-flex h-10 items-center rounded-md border border-indigo-500/35 bg-indigo-500 px-4 text-sm font-semibold text-white transition-transform hover:-translate-y-px hover:bg-indigo-400"
             >
               Run a report
             </Link>
@@ -106,7 +106,7 @@ export default function LandingPage() {
 
       <main>
         <section className="relative overflow-hidden border-b border-white/8">
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(159,245,209,0.06),transparent_28%,transparent)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(99,102,241,0.12),transparent_28%,transparent)]" />
           <div className="absolute inset-y-0 left-1/2 hidden w-px bg-white/6 xl:block" />
           <div className="mx-auto grid max-w-6xl gap-10 px-5 pb-16 pt-12 sm:px-6 lg:pt-16 xl:grid-cols-[1.03fr_0.97fr] xl:gap-12 xl:pb-20">
             <div className="max-w-xl">
@@ -114,7 +114,7 @@ export default function LandingPage() {
               <h1 className="mt-5 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-[58px] lg:leading-[1.04]">
                 See why customers return a product before the next batch ships.
               </h1>
-              <p className="mt-5 max-w-lg text-base leading-7 text-[#9bb0c5] sm:text-lg">
+              <p className="mt-5 max-w-lg text-base leading-7 text-[#a1a1aa] sm:text-lg">
                 Paste an Amazon URL. ReviewRadar pulls the complaints customers repeat, shows what changed sentiment,
                 and gives you a fix list you can hand to ops, product, or your supplier.
               </p>
@@ -123,17 +123,17 @@ export default function LandingPage() {
                 <LandingUrlForm />
               </div>
 
-              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-[#9bb0c5]">
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-[#a1a1aa]">
                 <div className="inline-flex items-center gap-2">
-                  <Clock3 className="h-4 w-4 text-[#9ff5d1]" />
+                  <Clock3 className="h-4 w-4 text-indigo-400" />
                   Report in about 60 seconds
                 </div>
                 <div className="inline-flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-[#9ff5d1]" />
+                  <ShieldCheck className="h-4 w-4 text-indigo-400" />
                   First report free
                 </div>
                 <div className="inline-flex items-center gap-2">
-                  <ScanSearch className="h-4 w-4 text-[#9ff5d1]" />
+                  <ScanSearch className="h-4 w-4 text-indigo-400" />
                   Pulls live review patterns
                 </div>
               </div>
@@ -142,7 +142,7 @@ export default function LandingPage() {
                 {trustItems.map((item) => (
                   <div
                     key={item}
-                    className="rounded-md border border-white/8 bg-white/[0.025] px-3 py-3 text-sm text-[#b7c8d8]"
+                    className="rounded-md border border-white/8 bg-white/[0.025] px-3 py-3 text-sm text-[#a1a1aa]"
                   >
                     {item}
                   </div>
@@ -151,15 +151,15 @@ export default function LandingPage() {
             </div>
 
             <div className="xl:pt-6">
-              <div className="rounded-[8px] border border-white/10 bg-[#0b1722] shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
+              <div className="rounded-[8px] border border-white/10 bg-[#111111] shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
                 <div className="flex items-center justify-between border-b border-white/8 px-5 py-4">
                   <div>
                     <div className="text-sm font-semibold text-white">Sample report</div>
-                    <div className="mt-1 text-xs text-[#7e92a8]">
+                    <div className="mt-1 text-xs text-[#71717a]">
                       HydraTrack 32oz Insulated Bottle • 842 reviews analyzed
                     </div>
                   </div>
-                  <div className="rounded-md border border-[#9ff5d1]/20 bg-[#9ff5d1]/10 px-3 py-1 text-sm font-semibold text-[#9ff5d1]">
+                  <div className="rounded-md border border-indigo-500/20 bg-indigo-500/10 px-3 py-1 text-sm font-semibold text-indigo-300">
                     Score 61/100
                   </div>
                 </div>
@@ -167,19 +167,19 @@ export default function LandingPage() {
                 <div className="grid gap-4 p-5">
                   <div className="grid gap-3 sm:grid-cols-3">
                     <div className="rounded-[8px] border border-white/8 bg-white/[0.025] p-4">
-                      <div className="text-xs uppercase tracking-[0.16em] text-[#6f859b]">Negative review share</div>
+                      <div className="text-xs uppercase tracking-[0.16em] text-[#52525b]">Negative review share</div>
                       <div className="mt-2 text-3xl font-semibold text-white">38%</div>
-                      <div className="mt-1 text-sm text-[#8da3b8]">Up 9 points after the lid redesign</div>
+                      <div className="mt-1 text-sm text-[#71717a]">Up 9 points after the lid redesign</div>
                     </div>
                     <div className="rounded-[8px] border border-white/8 bg-white/[0.025] p-4">
-                      <div className="text-xs uppercase tracking-[0.16em] text-[#6f859b]">Top complaint cluster</div>
+                      <div className="text-xs uppercase tracking-[0.16em] text-[#52525b]">Top complaint cluster</div>
                       <div className="mt-2 text-xl font-semibold text-white">Leak risk</div>
-                      <div className="mt-1 text-sm text-[#8da3b8]">46 mentions across recent reviews</div>
+                      <div className="mt-1 text-sm text-[#71717a]">46 mentions across recent reviews</div>
                     </div>
                     <div className="rounded-[8px] border border-white/8 bg-white/[0.025] p-4">
-                      <div className="text-xs uppercase tracking-[0.16em] text-[#6f859b]">Recommended move</div>
+                      <div className="text-xs uppercase tracking-[0.16em] text-[#52525b]">Recommended move</div>
                       <div className="mt-2 text-xl font-semibold text-white">Fix packaging test</div>
-                      <div className="mt-1 text-sm text-[#8da3b8]">Then update the listing photo callout</div>
+                      <div className="mt-1 text-sm text-[#71717a]">Then update the listing photo callout</div>
                     </div>
                   </div>
 
@@ -187,19 +187,19 @@ export default function LandingPage() {
                     <div className="rounded-[8px] border border-white/8 bg-white/[0.025] p-4">
                       <div className="flex items-center justify-between">
                         <div className="text-sm font-semibold text-white">What needs fixing first</div>
-                        <div className="text-xs text-[#7e92a8]">Complaint frequency</div>
+                        <div className="text-xs text-[#71717a]">Complaint frequency</div>
                       </div>
                       <div className="mt-4 space-y-4">
                         {reportList.map((item, index) => (
                           <div key={item.label}>
                             <div className="mb-2 flex items-center justify-between gap-3 text-sm">
                               <div className="flex items-center gap-2">
-                                <span className="flex h-6 w-6 items-center justify-center rounded-md border border-white/8 bg-white/[0.03] text-xs text-[#a7b8c9]">
+                                <span className="flex h-6 w-6 items-center justify-center rounded-md border border-white/8 bg-white/[0.03] text-xs text-[#71717a]">
                                   {index + 1}
                                 </span>
-                                <span className="text-[#dbe7f2]">{item.label}</span>
+                                <span className="text-white">{item.label}</span>
                               </div>
-                              <span className="text-[#8da3b8]">{item.count}</span>
+                              <span className="text-[#71717a]">{item.count}</span>
                             </div>
                             <Bar value={Math.max(18, item.count * 2)} color={item.tone} />
                           </div>
@@ -210,17 +210,17 @@ export default function LandingPage() {
                     <div className="space-y-4">
                       <div className="rounded-[8px] border border-white/8 bg-white/[0.025] p-4">
                         <div className="text-sm font-semibold text-white">Evidence pulled from reviews</div>
-                        <div className="mt-4 rounded-[8px] border border-[#f3c969]/25 bg-[#f3c969]/8 p-4 text-sm leading-6 text-[#d9e5ef]">
+                        <div className="mt-4 rounded-[8px] border border-indigo-500/20 bg-indigo-500/10 p-4 text-sm leading-6 text-[#e4e4e7]">
                           “It keeps cold, but the lid leaked all over my laptop sleeve on the third day.”
                         </div>
-                        <div className="mt-3 rounded-[8px] border border-[#8fb7ff]/20 bg-[#8fb7ff]/8 p-4 text-sm leading-6 text-[#d9e5ef]">
+                        <div className="mt-3 rounded-[8px] border border-violet-500/20 bg-violet-500/10 p-4 text-sm leading-6 text-[#e4e4e7]">
                           “The ounce markers looked great out of the box, then faded after a week.”
                         </div>
                       </div>
 
                       <div className="rounded-[8px] border border-white/8 bg-white/[0.025] p-4">
                         <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                          <Sparkles className="h-4 w-4 text-[#9ff5d1]" />
+                          <Sparkles className="h-4 w-4 text-indigo-400" />
                           Fix list
                         </div>
                         <div className="mt-3 space-y-3">
@@ -229,8 +229,8 @@ export default function LandingPage() {
                             'Run a 30-minute inverted leak test before boxing',
                             'Move cleaning instructions onto the insert card',
                           ].map((item) => (
-                            <div key={item} className="flex items-start gap-3 text-sm text-[#cdd9e5]">
-                              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#9ff5d1]" />
+                            <div key={item} className="flex items-start gap-3 text-sm text-[#d4d4d8]">
+                              <Check className="mt-0.5 h-4 w-4 shrink-0 text-indigo-400" />
                               <span>{item}</span>
                             </div>
                           ))}
@@ -256,7 +256,7 @@ export default function LandingPage() {
             <div className="mt-10 grid gap-4 lg:grid-cols-2">
               <div className="rounded-[8px] border border-white/8 bg-white/[0.025] p-5">
                 <div className="flex items-center gap-2 text-sm font-semibold text-[#dce6ef]">
-                  <TriangleAlert className="h-4 w-4 text-[#f59a8f]" />
+                  <TriangleAlert className="h-4 w-4 text-indigo-400" />
                   Before
                 </div>
                 <div className="mt-5 space-y-3">
@@ -266,16 +266,16 @@ export default function LandingPage() {
                     '“Great color. Bad smell from the straw on day one.”',
                     '“I had to read forty reviews to figure out if the lid issue was common.”',
                   ].map((quote) => (
-                    <div key={quote} className="rounded-[8px] border border-white/8 bg-[#09131d] p-4 text-sm leading-6 text-[#9eb2c6]">
+                    <div key={quote} className="rounded-[8px] border border-white/8 bg-[#111111] p-4 text-sm leading-6 text-[#a1a1aa]">
                       {quote}
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="rounded-[8px] border border-[#9ff5d1]/18 bg-[#9ff5d1]/[0.04] p-5">
+              <div className="rounded-[8px] border border-indigo-500/18 bg-indigo-500/[0.06] p-5">
                 <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                  <ChartColumnIncreasing className="h-4 w-4 text-[#9ff5d1]" />
+                  <ChartColumnIncreasing className="h-4 w-4 text-indigo-400" />
                   After
                 </div>
                 <div className="mt-5 grid gap-3">
@@ -286,8 +286,8 @@ export default function LandingPage() {
                     ['Next move', 'Fix the gasket and relaunch the third image with a leak-proof proof point.'],
                   ].map(([label, detail]) => (
                     <div key={label} className="flex items-start justify-between gap-4 rounded-[8px] border border-white/8 bg-[#0a1620] p-4">
-                      <div className="text-sm text-[#7ddbb2]">{label}</div>
-                      <div className="max-w-[24rem] text-right text-sm leading-6 text-[#dce6ef]">{detail}</div>
+                      <div className="text-sm text-indigo-300">{label}</div>
+                      <div className="max-w-[24rem] text-right text-sm leading-6 text-[#e4e4e7]">{detail}</div>
                     </div>
                   ))}
                 </div>
@@ -305,7 +305,7 @@ export default function LandingPage() {
                   The report should sound like someone actually read the reviews.
                 </h2>
               </div>
-              <Link href="/analyze" className="inline-flex items-center gap-2 text-sm font-semibold text-[#9ff5d1]">
+              <Link href="/analyze" className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-300">
                 Try the live analyzer
                 <ChevronRight className="h-4 w-4" />
               </Link>
@@ -316,15 +316,15 @@ export default function LandingPage() {
                 <div key={card.issue} className="rounded-[8px] border border-white/8 bg-white/[0.025] p-5">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="text-lg font-semibold text-white">{card.issue}</h3>
-                    <div className="rounded-md border border-[#9ff5d1]/20 bg-[#9ff5d1]/10 px-2 py-1 text-xs font-semibold text-[#9ff5d1]">
+                    <div className="rounded-md border border-indigo-500/20 bg-indigo-500/10 px-2 py-1 text-xs font-semibold text-indigo-300">
                       {card.severity}
                     </div>
                   </div>
-                  <div className="mt-3 text-sm font-medium text-[#7ddbb2]">{card.evidence}</div>
-                  <p className="mt-4 text-sm leading-6 text-[#9eb2c6]">{card.detail}</p>
-                  <div className="mt-5 rounded-[8px] border border-white/8 bg-[#09131d] p-4">
-                    <div className="text-xs uppercase tracking-[0.16em] text-[#708397]">What to change</div>
-                    <p className="mt-2 text-sm leading-6 text-[#dce6ef]">{card.fix}</p>
+                  <div className="mt-3 text-sm font-medium text-indigo-300">{card.evidence}</div>
+                  <p className="mt-4 text-sm leading-6 text-[#a1a1aa]">{card.detail}</p>
+                  <div className="mt-5 rounded-[8px] border border-white/8 bg-[#111111] p-4">
+                    <div className="text-xs uppercase tracking-[0.16em] text-[#52525b]">What to change</div>
+                    <p className="mt-2 text-sm leading-6 text-[#e4e4e7]">{card.fix}</p>
                   </div>
                 </div>
               ))}
@@ -341,22 +341,22 @@ export default function LandingPage() {
               </h2>
             </div>
 
-            <div className="mt-10 rounded-[8px] border border-white/10 bg-[#0b1722] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.28)]">
+            <div className="mt-10 rounded-[8px] border border-white/10 bg-[#111111] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.28)]">
               <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
                 <div className="rounded-[8px] border border-white/8 bg-white/[0.025] p-4">
                   <div className="flex items-center justify-between">
                     <div className="text-sm font-semibold text-white">Recent reports</div>
-                    <div className="text-xs text-[#7e92a8]">Last 30 days</div>
+                    <div className="text-xs text-[#71717a]">Last 30 days</div>
                   </div>
                   <div className="mt-4 space-y-3">
                     {dashboardReports.map((report) => (
-                      <div key={report.product} className="grid gap-3 rounded-[8px] border border-white/8 bg-[#09131d] p-4 sm:grid-cols-[1.4fr_0.55fr_0.55fr] sm:items-center">
+                      <div key={report.product} className="grid gap-3 rounded-[8px] border border-white/8 bg-[#0f0f10] p-4 sm:grid-cols-[1.4fr_0.55fr_0.55fr] sm:items-center">
                         <div>
                           <div className="text-sm font-medium text-white">{report.product}</div>
-                          <div className="mt-1 text-xs text-[#7e92a8]">{report.action}</div>
+                          <div className="mt-1 text-xs text-[#71717a]">{report.action}</div>
                         </div>
-                        <div className="text-sm text-[#dce6ef]">Score {report.score}</div>
-                        <div className={`text-sm font-semibold ${report.delta.startsWith('+') ? 'text-[#9ff5d1]' : 'text-[#f59a8f]'}`}>
+                        <div className="text-sm text-[#e4e4e7]">Score {report.score}</div>
+                        <div className={`text-sm font-semibold ${report.delta.startsWith('+') ? 'text-indigo-300' : 'text-violet-300'}`}>
                           {report.delta}
                         </div>
                       </div>
@@ -371,10 +371,10 @@ export default function LandingPage() {
                       {[32, 40, 29, 51, 56, 44, 26].map((value, index) => (
                         <div key={index} className="flex flex-1 flex-col items-center gap-2">
                           <div
-                            className="w-full rounded-t-md bg-[linear-gradient(180deg,#9ff5d1_0%,#4aa3a1_100%)]"
+                            className="w-full rounded-t-md bg-[linear-gradient(180deg,#818cf8_0%,#4f46e5_100%)]"
                             style={{ height: `${value * 2}px` }}
                           />
-                          <div className="text-[11px] text-[#7e92a8]">W{index + 1}</div>
+                          <div className="text-[11px] text-[#71717a]">W{index + 1}</div>
                         </div>
                       ))}
                     </div>
@@ -388,7 +388,7 @@ export default function LandingPage() {
                         'Pin supplier changes to sentiment drops',
                         'Update listing images with the right proof points',
                       ].map((item) => (
-                        <div key={item} className="rounded-[8px] border border-white/8 bg-[#09131d] p-4 text-sm leading-6 text-[#cfdbe7]">
+                        <div key={item} className="rounded-[8px] border border-white/8 bg-[#0f0f10] p-4 text-sm leading-6 text-[#e4e4e7]">
                           {item}
                         </div>
                       ))}
@@ -401,13 +401,13 @@ export default function LandingPage() {
         </section>
 
         <section className="px-5 py-16 sm:px-6 sm:py-20">
-          <div className="mx-auto max-w-4xl rounded-[8px] border border-[#9ff5d1]/18 bg-[linear-gradient(180deg,rgba(159,245,209,0.08),rgba(255,255,255,0.02))] p-6 sm:p-8">
+          <div className="mx-auto max-w-4xl rounded-[8px] border border-indigo-500/18 bg-[linear-gradient(180deg,rgba(99,102,241,0.12),rgba(255,255,255,0.02))] p-6 sm:p-8">
             <div className="max-w-2xl">
               <SectionLabel>Run your first report</SectionLabel>
               <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
                 Stop guessing what customers mean by “quality issue.”
               </h2>
-              <p className="mt-4 text-base leading-7 text-[#9eb2c6]">
+              <p className="mt-4 text-base leading-7 text-[#a1a1aa]">
                 Drop in a product URL and get the complaint clusters, evidence, and fix list in one pass.
               </p>
             </div>
@@ -415,7 +415,7 @@ export default function LandingPage() {
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/analyze"
-                className="inline-flex h-11 items-center justify-center rounded-md border border-[#9ff5d1]/35 bg-[#9ff5d1] px-5 text-sm font-semibold text-[#07111a] transition-transform hover:-translate-y-px"
+                className="inline-flex h-11 items-center justify-center rounded-md border border-indigo-500/35 bg-indigo-500 px-5 text-sm font-semibold text-white transition-transform hover:-translate-y-px hover:bg-indigo-400"
               >
                 Analyze an Amazon product
                 <ArrowRight className="ml-2 h-4 w-4" />
