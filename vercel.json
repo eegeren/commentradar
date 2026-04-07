@@ -1,0 +1,6 @@
+{
+  "env": {
+    "OPENAI_API_KEY": "@openai_api_key",
+    "RAINFOREST_API_KEY": "@rainforest_api_key"
+  }
+}
